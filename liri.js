@@ -3,6 +3,7 @@ var Spotify = require("node-spotify-api");
 var nodeArgs = process.argv;
 var movieName = "";
 var movieDefault = 'Mr. Nobody';
+var artistName = '';
 
 
 require("dotenv").config();
@@ -11,11 +12,60 @@ var keys = require('./keys.js');
 
 var spotifyClient = new Spotify(keys.spotify);
 
-console.log(spotifyClient);
+// console.log(spotifyClient);
 
     
-// https://rest.bandsintown.com/artists/" + artist + "/events?app_id=fbd9243030e50e0475cd78765e9cb68a
+// https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=fbd9243030e50e0475cd78765e9cb68a
     
+// https://rest.bandsintown.com/artists/Skrillex/events?app_id=fbd9243030e50e0475cd78765e9cb68a
+
+
+
+
+if(process.argv[2] === "concert-this" && process.argv[3] !== undefined) {
+  //handling spaces in the request if needed
+  for (var i = 3; i < nodeArgs.length; i++) {
+      if (i > 3 && i < nodeArgs.length) {
+        artistName = artistName + "+" + nodeArgs[i];
+      }
+      else {
+        artistName += nodeArgs[i];
+      }
+    }
+    
+    // Then run a request with axios to the OMDB API with the movie specified
+    var queryUrl = "https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=fbd9243030e50e0475cd78765e9cb68a";
+    
+    // This line is just to help us debug against the actual URL.
+    console.log(queryUrl);
+    
+    axios.get(queryUrl).then(
+      function(response) {
+        // console.log(response.data);
+        console.log('[Artist] : ' + artistName);
+        console.log('___________________________');
+        for(var i=0; i < response.data.length; i++){
+        console.log('[Venue] : ' + response.data[i].venue.name);
+        console.log('[City] : ' + response.data[i].venue.city);
+        console.log('[When] : ' + response.data[i].datetime);
+        console.log('---------------------------');
+      }
+
+
+// Date of the Event (use moment to format this as "MM/DD/YYYY")
+
+      }
+    );
+
+} 
+
+
+
+
+
+
+
+
 
     //if the arguments are movie related and actually DO have a request from user then run this
     if(process.argv[2] === "movie-this" && process.argv[3] !== undefined) {
@@ -51,7 +101,7 @@ console.log(spotifyClient);
     
     } 
     //if the user does not insert a request then default to mr nobody
-    else {
+    else if (process.argv[2] === "movie-this" && process.argv[3] === undefined){
         // Then run a request with axios to the OMDB API with the movie specified
         var queryUrl = "http://www.omdbapi.com/?t=" + movieDefault + "&y=&plot=short&apikey=127a5741";
           
