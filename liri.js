@@ -1,9 +1,11 @@
 var axios = require("axios");
 var Spotify = require("node-spotify-api");
+var moment = require('moment');
 var nodeArgs = process.argv;
 var movieName = "";
 var movieDefault = 'Mr. Nobody';
 var artistName = '';
+var defaultArtist ='Panic! At The Disco';
 
 
 require("dotenv").config();
@@ -44,23 +46,50 @@ if(process.argv[2] === "concert-this" && process.argv[3] !== undefined) {
         // console.log(response.data);
         console.log('[Artist] : ' + artistName);
         console.log('___________________________');
-        for(var i=0; i < response.data.length; i++){
+      for(var i=0; i < response.data.length; i++){
         console.log('[Venue] : ' + response.data[i].venue.name);
         console.log('[City] : ' + response.data[i].venue.city);
-        console.log('[When] : ' + response.data[i].datetime);
+        console.log('[When] : ' + moment(response.data[i].datetime).format('MM-DD-YYYY hh:mm'));
+        
+
+        // Date of the Event (use moment to format this as "MM/DD/YYYY")
         console.log('---------------------------');
       }
+    }
+  );
 
+} else if (process.argv[2] === "concert-this" && process.argv[3] === undefined){
+  for (var i = 3; i < nodeArgs.length; i++) {
+    if (i > 3 && i < nodeArgs.length) {
+      artistName = artistName + "+" + nodeArgs[i];
+    }
+    else {
+      artistName += nodeArgs[i];
+    }
+  }
+  
+  // Then run a request with axios to the OMDB API with the movie specified
+  var queryUrl = "https://rest.bandsintown.com/artists/" + defaultArtist + "/events?app_id=fbd9243030e50e0475cd78765e9cb68a";
+  
+  // This line is just to help us debug against the actual URL.
+  console.log(queryUrl);
+  
+  axios.get(queryUrl).then(
+    function(response) {
+      // console.log(response.data);
+      console.log('[Artist] : ' + defaultArtist);
+      console.log('___________________________');
+    for(var i=0; i < response.data.length; i++){
+      console.log('[Venue] : ' + response.data[i].venue.name);
+      console.log('[City] : ' + response.data[i].venue.city);
+      console.log('[When] : ' + moment(response.data[i].datetime).format('MM-DD-YYYY hh:mm'));
+      // Date of the Event (use moment to format this as "MM/DD/YYYY")
+      console.log('---------------------------');
+    }
+  }
+);
 
-// Date of the Event (use moment to format this as "MM/DD/YYYY")
-
-      }
-    );
-
-} 
-
-
-
+}
 
 
 
