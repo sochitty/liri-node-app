@@ -6,7 +6,7 @@ We will be using terminal to make our commands to liri and getting a response of
 ### concert-this
 `node liri.js concert-this <artist>`
 This will respond using the BandsInTown API and give us the artist we chose upcoming concerts such as 
-**venue name**
+*  **venue name**
 **venue location**
 **date/time of the event.**
 
