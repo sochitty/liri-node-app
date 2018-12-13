@@ -34,7 +34,7 @@ This will use the Spotify API and give us back information about the song such a
 *  **Preview Link**
 *  **Album Name**
 
-[spotify-this-song Example](#)
+[spotify-this-song Example](https://www.youtube.com/watch?v=xqiXXL0sOaw&t=3s)
 
 ### do-what-it-says
 ```node liri.js do-what-it-says``` 
