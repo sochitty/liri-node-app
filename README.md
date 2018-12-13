@@ -45,7 +45,7 @@ This will read the *random.txt* file and give us back whatever is in that file. 
 *  **Preview Link**
 *  **Album Name**
 
-[do-what-it-says Example](#)
+[do-what-it-says Example](https://www.youtube.com/watch?v=sucZGrnxZGU)
 
 
 
