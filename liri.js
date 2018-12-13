@@ -8,7 +8,7 @@ var movieDefault = 'Mr. Nobody';
 var artistName = '';
 var defaultArtist ='Panic! At The Disco';
 var songName = '';
-var songDefault = 'the sign';
+var songDefault = 'hello';
 
 
 require("dotenv").config();
@@ -123,7 +123,6 @@ console.log('[Album] : ' + JSON.stringify(data.tracks.items[0].album.name, null,
       return console.log('Error occurred: ' + err);
     }
 
-       console.log("the song is: " + songDefault); 
 
     //artist name
 console.log('[Artist] : ' + JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
